@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<title>F&F Command Center | State 757</title>
+<style>
+:root{
+  --bg:#090b10;--panel:#11151d;--panel2:#171c26;--line:#2a3240;
+  --gold:#f4c95d;--blue:#67b7ff;--purple:#a88cff;--green:#63d69a;
+  --red:#ff6f78;--text:#f4f6fa;--muted:#9ca7b8;
+}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#172033 0,#090b10 42%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select{font:inherit} button{cursor:pointer}
+header{padding:24px 18px 18px;border-bottom:1px solid var(--line);background:rgba(9,11,16,.86);position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand h1{margin:0;font-size:24px;letter-spacing:.7px}.brand h1 span{color:var(--gold)}.tag{font-size:12px;color:var(--muted);margin-top:4px}
+.menu{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 11px}
+nav{display:none;flex-wrap:wrap;gap:7px;margin-top:14px}nav.open{display:flex}nav button{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:9px}nav button.active{color:#111;background:var(--gold);border-color:var(--gold)}
+main{max-width:1100px;margin:auto;padding:18px}.view{display:none}.view.active{display:block}
+.hero{background:linear-gradient(135deg,rgba(244,201,93,.12),rgba(103,183,255,.07));border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px}.hero h2{font-size:28px;margin:0 0 7px}.hero p{color:var(--muted);margin:0;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{background:rgba(17,21,29,.92);border:1px solid var(--line);border-radius:15px;padding:16px}.card h3{margin:0 0 7px}.card p{color:var(--muted);font-size:14px;line-height:1.45}.stat{font-size:27px;font-weight:800;color:var(--gold)}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:10px}.btn.primary{background:var(--gold);color:#111;border-color:var(--gold);font-weight:700}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 12px}.section-title h2{margin:0}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}input,select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 11px;width:100%}.controls input{flex:1;min-width:180px}.controls select{width:auto}
+.badge{display:inline-block;font-size:11px;border-radius:999px;padding:4px 8px;border:1px solid var(--line);color:var(--muted);margin-right:5px}.filled{color:var(--green);border-color:rgba(99,214,154,.35)}.openb{color:var(--red);border-color:rgba(255,111,120,.35)}.optional{color:var(--purple);border-color:rgba(168,140,255,.35)}
+.job{margin-bottom:10px}.jobtop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.jobtitle{font-weight:750}.slots{margin-top:11px;display:flex;gap:7px;flex-wrap:wrap}.slot{background:#0c1017;border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:12px}
+.tool{transition:.15s}.tool:hover{transform:translateY(-2px);border-color:#46536a}
+.notice{border-left:3px solid var(--gold);padding:11px 13px;background:rgba(244,201,93,.06);color:var(--muted);margin:14px 0;border-radius:0 10px 10px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:12px}
+footer{max-width:1100px;margin:30px auto 0;padding:18px;color:var(--muted);font-size:11px;text-align:center;border-top:1px solid var(--line)}
+@media(min-width:760px){header{padding:18px 30px}.menu{display:none}nav{display:flex!important;margin-top:0}header .brand{max-width:1100px;margin:auto}main{padding:28px 30px}.hero h2{font-size:34px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div><h1>F&F <span>COMMAND CENTER</span></h1><div class="tag">F around & Find out • State 757</div></div>
+    <button class="menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+  </div>
+  <nav id="nav"></nav>
+</header>
+
+<main>
+<section id="home" class="view active">
+  <div class="hero">
+    <h2>Welcome to the F&F war room.</h2>
+    <p>Your alliance command center for jobs, events, planning and the occasional carefully calculated bad decision. Built for F&F, State 757.</p>
+    <div class="quick"><button class="btn primary" onclick="show('jobs')">R4/R5 Command Center</button><button class="btn" onclick="show('tools')">Open Tools</button></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="stat" id="jobStat">0</div><h3>Open job slots</h3><p>Positions still waiting for a brave volunteer.</p></div>
+    <div class="card"><div class="stat">757</div><h3>State</h3><p>F&F home state.</p></div>
+    <div class="card"><div class="stat">F&F</div><h3>Alliance</h3><p>F around & Find out.</p></div>
+  </div>
+  <div class="notice">This is an unofficial fan-made Puzzles & Survival alliance tool. It is not affiliated with 37GAMES.</div>
+</section>
+
+<section id="tools" class="view">
+  <div class="section-title"><h2>Tools</h2></div>
+  <div class="grid" id="toolGrid"></div>
+</section>
+
+<section id="jobs" class="view">
+  <div class="section-title"><h2>R4/R5 Command Center</h2><span class="badge" id="jobSummary"></span></div>
+  <div class="controls"><input id="jobSearch" placeholder="Search jobs or names..." oninput="renderJobs()"><select id="jobCat" onchange="renderJobs()"><option>All categories</option><option>Leadership</option><option>War & Events</option><option>Alliance Operations</option></select></div>
+  <div id="jobList"></div>
+</section>
+
+<section id="calculators" class="view">
+  <div class="section-title"><h2>Quick Calculators</h2></div>
+  <div class="grid">
+    <div class="card"><h3>Simple Points Calculator</h3><p>Enter points earned and multiplier.</p><input id="pts" type="number" placeholder="Points"><br><br><input id="mult" type="number" placeholder="Multiplier" value="1"><br><br><div class="stat" id="result">0</div></div>
+    <div class="card"><h3>Troop Planning</h3><p>Quick troop count helper for planning.</p><input id="troops" type="number" placeholder="Troops"><br><br><input id="marches" type="number" placeholder="Marches" value="1"><br><br><div class="stat" id="troopResult">0 / march</div></div>
+  </div>
+</section>
+
+<section id="planner" class="view">
+  <div class="section-title"><h2>Event Planner</h2></div>
+  <div class="card"><h3>F&F Event Notes</h3><p>Use this as the starter area for Doom, DOA, WLK, Water War, Valiant, Sonic, FireFlies, Showdown and other event planning.</p><textarea id="notes" style="width:100%;min-height:220px;background:#0c1017;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px" placeholder="Paste event notes, assignments, reminders..."></textarea><br><br><button class="btn primary" onclick="saveNotes()">Save Notes</button></div>
+</section>
+
+<section id="guide" class="view">
+  <div class="section-title"><h2>Alliance Guide</h2></div>
+  <div class="grid">
+    <div class="card"><h3>DOA</h3><p>Coordinate participation, defense assignments, healing and reward goals before the event starts.</p></div>
+    <div class="card"><h3>Doom</h3><p>Prepare troop healing, reward-shop priorities and post-event cleanup before reset.</p></div>
+    <div class="card"><h3>WLK</h3><p>Track sign-ups, towers, captains, attendance and boxes in one place.</p></div>
+    <div class="card"><h3>Alliance Etiquette</h3><p>Communicate clearly, cancel rallies when needed, protect shared resources and do not make everyone guess what is happening.</p></div>
+  </div>
+</section>
+</main>
+
+<footer>F&F Command Center • State 757 • Unofficial fan-made Puzzles & Survival tool</footer>
+
+<script>
+const jobs=[
+["Leader","ThaTeam","Leadership"],["Overseer","Babz","Leadership"],["Back Up Overseer","OPEN","Leadership"],
+["Militarist","Chrishuna","Leadership"],["Back Up Militarist","OPEN","Leadership"],["Diplomat","Wow","Leadership"],
+["Back Up Diplomat","OPEN","Leadership"],["Recruiter","Sym","Leadership"],["Back up Recruiter","OPEN","Leadership"],
+["Event Coordinator","Wow","Leadership"],["Rank/Welcome Officer","Lulu / ThaTeam","Leadership"],
+["Discord / Ping Officers (2)","Curious","Leadership",2],["Hive Manager","Wow / Chrishuna","Leadership"],
+["State Relations","ThaTeam / Wow / Chrishuna","Leadership"],["Wasteland King Coordinator","Qnoyz / Wow","War & Events"],
+["WLK Link Poster and Sign-Up Coordinator","Roly","War & Events"],["Valiant Coordinator","OPEN","War & Events"],
+["Sonic Coordinator","Chrishuna","War & Events"],["All Parties","Chrishuna","War & Events"],
+["Tundra Time & Rank Coordinator","ThaTeam","War & Events"],["Water War NAP Maker","ThaTeam / Wow","War & Events"],
+["Water War Coordinator","Sym","War & Events"],["Dead Rising Coordinator","ThaTeam","War & Events"],
+["DoA Coordinator","Babz","War & Events"],["Capture the Flag","Blue Eyes","War & Events"],
+["Alliance Conquest","ThaTeam","War & Events"],["Showdown (2-3)","Babz","War & Events",3],
+["FireFlies","OPEN","War & Events"],["Hunt Mastery","Morning: ThaTeam / Afternoon: Lulu / Evening: Blue Eyes","War & Events"],
+["Alliance Stam Party","OPEN","War & Events"],["Strike First","OPEN","War & Events"],
+["Seed Trading with State","OPEN","Alliance Operations"],["Box Allocations","ThaTeam","Alliance Operations"],
+["Tile Cleanup","OPEN","Alliance Operations"],["Tech Tree","OPEN","Alliance Operations"],["Alliance Shop","Chrishuna","Alliance Operations"],
+["Alliance Shop Assistant","OPEN","Alliance Operations"]
+];
+
+const tools=[
+["Doom Rewards","Compare reward goals and plan healing/reward priorities.","calculators"],
+["WLK War Room","Track WLK sign-ups, assignments and attendance.","planner"],
+["Hive Mapper","Plan HQ, towers and alliance-building layouts.","planner"],
+["PNS Chat Generator","Build clean alliance announcements and reminders.","planner"],
+["WK Points Calculator","Quick event points planning.","calculators"],
+["Hero Specialty Planner","Plan specialty choices and builds.","planner"],
+["Break Loose Planner","Organize event timing and participation.","planner"],
+["Off Week Planner","Keep the alliance productive between major events.","planner"],
+["Training Calculator","Plan troop training and Fast Comeback preparation.","calculators"],
+["Achievements Tracker","Track alliance goals and milestones.","planner"]
+];
+
+function show(id){
+ document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+ document.querySelector('nav').classList.remove('open');
+}
+function buildNav(){
+ const items=[["home","Home"],["tools","Tools"],["jobs","R4/R5 Jobs"],["calculators","Calculators"],["planner","Planner"],["guide","Guide"]];
+ document.getElementById('nav').innerHTML=items.map(([id,n])=>`<button data-view="${id}" onclick="show('${id}')">${n}</button>`).join('');
+}
+function renderTools(){
+ document.getElementById('toolGrid').innerHTML=tools.map(t=>`<div class="card tool"><h3>${t[0]}</h3><p>${t[1]}</p><button class="btn" onclick="show('${t[2]}')">Open</button></div>`).join('');
+}
+function slotData(j){
+ const name=j[1], max=j[3]||1;
+ if(max===1)return [{name:name,optional:false}];
+ const parts=name==="Curious"?["Curious","OPEN"]:["Babz","OPEN","OPEN"];
+ return parts.slice(0,max).map((x,i)=>({name:x,optional:j[0].includes("Showdown")&&i===2}));
+}
+function renderJobs(){
+ const q=(document.getElementById('jobSearch').value||'').toLowerCase();
+ const cat=document.getElementById('jobCat').value;
+ let open=0,total=0,filled=0;
+ const filtered=jobs.filter(j=>(cat==="All categories"||j[2]===cat)&&j[0].toLowerCase().includes(q)|| (cat==="All categories"||j[2]===cat)&&j[1].toLowerCase().includes(q));
+ document.getElementById('jobList').innerHTML=filtered.map(j=>{
+   const slots=slotData(j); total+=slots.length; filled+=slots.filter(s=>s.name!=="OPEN").length; open+=slots.filter(s=>s.name==="OPEN"&&!s.optional).length;
+   return `<div class="card job"><div class="jobtop"><div><div class="jobtitle">${j[0]}</div><span class="badge">${j[2]}</span></div><span class="badge ${openbClass(slots)}">${slots.filter(s=>s.name!=="OPEN").length}/${slots.length} filled</span></div><div class="slots">${slots.map((s,i)=>`<div class="slot">${s.name==="OPEN"?`<span class="badge ${s.optional?'optional':'openb'}">${s.optional?'Optional':'OPEN'}</span>`:`<span class="badge filled">Assigned</span>`}${s.name} ${slots.length>1?`<small>#${i+1}</small>`:''}</div>`).join('')}</div></div>`;
+ }).join('')||'<div class="card">No matching jobs.</div>';
+ document.getElementById('jobSummary').textContent=`${open} required openings • ${filled}/${total} filled`;
+ document.getElementById('jobStat').textContent=jobs.reduce((n,j)=>n+slotData(j).filter(s=>s.name==="OPEN"&&!s.optional).length,0);
+}
+function openbClass(slots){return slots.every(s=>s.name!=="OPEN")?'filled':'openb'}
+document.getElementById('pts').addEventListener('input',calc);document.getElementById('mult').addEventListener('input',calc);
+function calc(){document.getElementById('result').textContent=((+document.getElementById('pts').value||0)*(+document.getElementById('mult').value||0)).toLocaleString()}
+document.getElementById('troops').addEventListener('input',troopCalc);document.getElementById('marches').addEventListener('input',troopCalc);
+function troopCalc(){let t=+document.getElementById('troops').value||0,m=+document.getElementById('marches').value||1;document.getElementById('troopResult').textContent=Math.floor(t/m).toLocaleString()+" / march"}
+function saveNotes(){localStorage.setItem('ffnotes',document.getElementById('notes').value);alert('F&F notes saved on this device.');}
+buildNav();renderTools();renderJobs();calc();troopCalc();
+document.getElementById('notes').value=localStorage.getItem('ffnotes')||'';
+</script>
+</body>
+</html>
